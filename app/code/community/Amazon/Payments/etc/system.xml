@@ -66,7 +66,8 @@
 
              <seller_id translate="label">
                 <label>Seller/Merchant ID</label>
-                <frontend_type>text</frontend_type>
+                <frontend_type>obscure</frontend_type>
+                <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
                 <sort_order>15</sort_order>
                 <show_in_default>1</show_in_default>
                 <show_in_website>1</show_in_website>
@@ -75,7 +76,8 @@
 
             <access_key translate="label">
                 <label>MWS Access Key</label>
-                <frontend_type>text</frontend_type>
+                <frontend_type>obscure</frontend_type>
+                <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
                 <sort_order>20</sort_order>
                 <show_in_default>1</show_in_default>
                 <show_in_website>1</show_in_website>
@@ -83,7 +85,8 @@
             </access_key>
             <access_secret translate="label">
                 <label>MWS Secret Key</label>
-                <frontend_type>text</frontend_type>
+                <frontend_type>obscure</frontend_type>
+                <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
                 <sort_order>30</sort_order>
                 <show_in_default>1</show_in_default>
                 <show_in_website>1</show_in_website>
@@ -92,8 +95,8 @@
 
             <client_id translate="label">
                 <label>Client ID</label>
-                <frontend_type>text</frontend_type>
-                <backend_model>amazon_payments/system_config_backend_clientid</backend_model>
+                <frontend_type>obscure</frontend_type>
+                <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
                 <sort_order>31</sort_order>
                 <show_in_default>1</show_in_default>
                 <show_in_website>1</show_in_website>
@@ -102,8 +105,8 @@
 
             <client_secret translate="label">
                 <label>Client Secret</label>
-                <frontend_type>text</frontend_type>
-                <backend_model>amazon_payments/system_config_backend_clientsecret</backend_model>
+                <frontend_type>obscure</frontend_type>
+                <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
                 <sort_order>32</sort_order>
                 <show_in_default>1</show_in_default>
                 <show_in_website>1</show_in_website>

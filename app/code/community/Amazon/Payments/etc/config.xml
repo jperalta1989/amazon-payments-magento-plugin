@@ -34,26 +34,14 @@
                 <class>Amazon_Payments_Helper</class>
             </amazon_payments>
         </helpers>
-        <template>
-            <email>
-               <amazon_payments_async_decline_soft>
-                   <label>Amazon Payments Async Decline (Soft)</label>
-                   <file>amazon_payments_async_decline_soft.html</file>
-                   <type>html</type>
-               </amazon_payments_async_decline_soft>
-               <amazon_payments_async_decline_hard>
-                   <label>Amazon Payments Async Decline (Hard)</label>
-                   <file>amazon_payments_async_decline_hard.html</file>
-                   <type>html</type>
-               </amazon_payments_async_decline_hard>
-            </email>
-        </template>
+
         <rewrite>
             <amazon_payments_checkout>
                 <from><![CDATA[#^/checkout/amazon_payments#]]></from>
                 <to>/amazon_payments/checkout</to>
             </amazon_payments_checkout>
         </rewrite>
+
         <resources>
             <payments_setup>
                 <setup>
@@ -65,6 +53,7 @@
                 </connection>
             </payments_setup>
         </resources>
+
     </global>
     <admin>
         <routers>
@@ -94,23 +83,14 @@
                     </amazon_payments>
                 </observers>
             </adminhtml_widget_container_html_before>
-            <sales_order_save_commit_after>
-                <observers>
-                    <amazon_payments_observer>
-                        <class>Amazon_Payments_Model_Observer_Order</class>
-                        <method>closeAmazonOrder</method>
-                    </amazon_payments_observer>
-                </observers>
-            </sales_order_save_commit_after>
         </events>
     </adminhtml>
+
     <frontend>
         <secure_url>
             <cart_updatepost>/checkout/cart/updatePost</cart_updatepost>
             <checkout_amazon>/checkout/amazon_payments</checkout_amazon>
             <amazon_checkout>/amazon_payments/checkout</amazon_checkout>
-            <cart_couponpost>/checkout/cart/couponPost</cart_couponpost>
-            <cart_estimatepost>/checkout/cart/estimatePost</cart_estimatepost>
         </secure_url>
         <routers>
             <amazon_payments>
@@ -163,13 +143,16 @@
             </custom_quote_process>
         </events>
     </frontend>
+
     <default>
         <payment>
             <amazon_payments>
                 <title>Amazon Payments</title>
                 <model>amazon_payments/paymentMethod</model>
+                <seller_id backend_model="adminhtml/system_config_backend_encrypted"/>
+                <access_key backend_model="adminhtml/system_config_backend_encrypted"/>
+                <access_secret backend_model="adminhtml/system_config_backend_encrypted"/>
                 <payment_action>authorize_capture</payment_action>
-                <checkout_page>amazon</checkout_page>
                 <show_pay_cart>1</show_pay_cart>
                 <order_status>processing</order_status>
                 <active>1</active>
@@ -178,9 +161,11 @@
                 <button_color>Gold</button_color>
                 <button_size>medium</button_size>
                 <button_badge>1</button_badge>
+
             </amazon_payments>
         </payment>
     </default>
+
     <crontab>
         <jobs>
             <amazon_payments_async>
@@ -189,4 +174,5 @@
             </amazon_payments_async>
         </jobs>
     </crontab>
+
 </config>

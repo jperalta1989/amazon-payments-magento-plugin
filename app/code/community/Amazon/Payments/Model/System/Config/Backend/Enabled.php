@@ -15,10 +15,12 @@ class Amazon_Payments_Model_System_Config_Backend_Enabled extends Mage_Core_Mode
      */
     public function save()
     {
-
         $data = $this->getFieldsetData();
         $isEnabled = $this->getValue();
 
+        if (preg_match('/^\*+$/', $data['seller_id'])) {
+            return parent::save();
+        }
         if ($isEnabled) {
             if ($data['seller_id'] && !ctype_alnum($data['seller_id'])) {
                 Mage::getSingleton('core/session')->addError('Error: Please verify your Seller ID (alphanumeric characters only).');
@@ -32,7 +34,8 @@ class Amazon_Payments_Model_System_Config_Backend_Enabled extends Mage_Core_Mode
      */
     public function _afterSaveCommit()
     {
-        $data = $this->getFieldsetData();
+        $data = $this->getDecryptedFieldsetData($this->getFieldsetData());
+
         $isEnabled = $this->getValue();
 
         if ($isEnabled) {
@@ -89,6 +92,24 @@ class Amazon_Payments_Model_System_Config_Backend_Enabled extends Mage_Core_Mode
     {
         $version = Mage::getConfig()->getModuleConfig("Amazon_Payments")->version;
         return "v$version";
+    }
+
+    /**
+     * Decrypt obscure inputs
+     *
+     */
+    private function getDecryptedFieldsetData($data){
+        foreach($data as $key => $value){
+            if (preg_match('/^\*+$/', $value)) {
+                if($key == 'client_id' || $key == 'client_secret'){
+                    $data[$key] = Mage::helper('core')->decrypt(Mage::getStoreConfig('payment/amazon_payments/'.$key));
+                }
+                else{
+                    $data[$key] = Mage::getStoreConfig('payment/amazon_payments/'.$key);
+                }
+            }
+        }
+        return $data;
     }
 
 }
